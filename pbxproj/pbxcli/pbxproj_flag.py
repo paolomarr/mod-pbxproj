@@ -2,6 +2,7 @@
 usage:
     pbxproj flag [options] <project> [--] (<flag_name> <flag_value>)...
     pbxproj flag [options] (--delete | -D) <project> [--] (<flag_name> <flag_value>)...
+    pbxproj flag [options] (--delete-all | -A) <project> [--] <flag_name>...
 
 positional arguments:
     <project>                               Project path to the .xcodeproj folder.
@@ -21,6 +22,8 @@ generic options:
 
 delete options:
     -D, --delete                            Removes the given flag_value's from the pairing flag_name.
+    -A, --delete-all                        Removes the <flag_name> from the project file completely, along
+                                                with existing values, if any.
 """
 
 # Future addition to the command line:
@@ -34,6 +37,8 @@ def execute(project, args):
     # make a decision of what function to call based on the -D flag
     if args[u'--delete']:
         return _remove(project, args)
+    elif args[u'--delete-all']:
+        return _remove_all(project, args)
     else:
         return _add(project, args)
 
@@ -48,6 +53,12 @@ def _add(project, args):
 def _remove(project, args):
     for (flag_name, flag_value) in zip(args[u'<flag_name>'], args[u'<flag_value>']):
         project.remove_flags(flag_name, flag_value, target_name=args[u'--target'],
+                             configuration_name=args[u'--configuration'])
+    return u'Flags removed successfully.'
+
+def _remove_all(project, args):
+    for flag_name in args[u'<flag_name>']:
+        project.remove_flags(flag_name, None, target_name=args[u'--target'],
                              configuration_name=args[u'--configuration'])
     return u'Flags removed successfully.'
 
