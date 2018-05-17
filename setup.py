@@ -34,7 +34,7 @@ class NoseTestCoverage(TestCommand):
 
 
 setup(name='pbxproj',
-      author='Ignacio Calderon',
+      author='Ignacio Calderon, Paolo Marchetti',
       description='XCode Project manipulation library for Python',
       entry_points={
         "console_scripts": [
@@ -44,7 +44,7 @@ setup(name='pbxproj',
             'pbxproj-folder = pbxproj.pbxcli.pbxproj_folder:main'
         ]
       },
-      url="http://github.com/kronenthaler/mod-pbxproj",
+      url="http://github.com/paolomarr/mod-pbxproj",
       version='2.2.3',
       license='MIT License',
       install_requires=['openstep_parser>=1.3.1', 'docopt', 'future'],
